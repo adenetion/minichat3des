@@ -1,0 +1,8 @@
+/* 
+- Utilizado em:
+- 1. Logomarca do site.
+*/
+.icon-UEA:before {
+	content: "\e600";
+	font-size: 5em
+}

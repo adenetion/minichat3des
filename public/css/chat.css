@@ -1,0 +1,21 @@
+@import "default.css";
+
+
+textarea.form-control {
+    border: 2px solid #BDC3C7;
+    border-radius: 10px;
+    resize: none;
+}
+
+label.control-label{
+    margin-top: 30px;
+    padding-left: 30px;
+}
+
+.chat-panel {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    height: 350px;
+    overflow-y: auto;
+    box-shadow: 3px 3px 4px #737373;
+}

@@ -1,0 +1,33 @@
+{
+    "name": "segredes/minichat3des",
+    "authors": [
+        {
+            "name": "Adenilton Barroso",
+            "email": "asb.ads@uea.edu.br"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "respect/rest": "dev-master",
+        "twig/twig": ">=1.0@stable",
+        "doctrine/orm": ">=2.5",
+        "symfony/yaml": "2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/",
+            "Models\\": "Models/",
+            "Controllers\\": "Controllers/",
+            "Viewers\\": "Viewers/",
+            "Traits\\": "Traits/",
+            "Library\\": "Library/"
+        }
+    },
+    "config":{
+        "bin-dir": "vendor/bin"
+    },
+    "minimum-stability": "dev"
+}

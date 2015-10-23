@@ -1,0 +1,72 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: transparent url(../images/gpp.png) left top repeat;
+    color: #333333;  
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body > .container {
+	width: 100%;
+	margin: 0;
+	position: relative;
+}
+
+.toggle:hover, .toggle:focus {
+	color: #fff;
+}
+
+#hidden {
+	display: none !important;
+}
+
+.actionButtons {
+	border-radius: 0px;
+}
+
+.margin-bottom-5 {
+	margin-bottom: 5px;
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+}
+
+body .drop-hover {
+	border: 3px dashed #95A5A6;
+	height: 150px;
+	background: #ECF0F1;
+}
+
+header {
+    border-radius: 8px;
+    background-color: #27ae60;
+    color: #fff;
+    padding: 10px 0;
+}
+
+header div.row {
+    margin-left: 0;
+}
+
+.form-container {
+    margin-top: 20px;
+    padding-top: 25px;
+    box-shadow: 2px 2px 3px #95A5A6;
+    border-radius: 10px;
+    background-color: #31708f;
+}
