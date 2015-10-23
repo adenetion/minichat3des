@@ -3,12 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/minichat3des/src/Controllers/ControleRota.php</file>
+            <file>file:/var/www/minichat3des/public/js/login.js</file>
+            <file>file:/var/www/minichat3des/public/css/style-library-1.css</file>
+            <file>file:/var/www/minichat3des/public/css/chat.css</file>
             <file>file:/var/www/minichat3des/public/js/srp.json</file>
+            <file>file:/var/www/minichat3des/src/Viewers/Inicial.php</file>
+            <file>file:/var/www/minichat3des/public/chat.html</file>
+            <file>file:/var/www/minichat3des/src/Models/Usuario.php</file>
+            <file>file:/var/www/minichat3des/src/Controllers/ControleRota.php</file>
+            <file>file:/var/www/minichat3des/public/default.html</file>
             <file>file:/var/www/minichat3des/src/Controllers/ControleUsuario.php</file>
             <file>file:/var/www/minichat3des/public/js/cadastro.js</file>
             <file>file:/var/www/minichat3des/src/Library/Container.php</file>
-            <file>file:/var/www/minichat3des/public/js/mycrypto.js</file>
+            <file>file:/var/www/minichat3des/src/Viewers/Page.php</file>
         </group>
     </open-files>
 </project-private>

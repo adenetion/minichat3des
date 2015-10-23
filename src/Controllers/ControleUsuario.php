@@ -4,6 +4,7 @@ namespace Controllers;
 use Doctrine\ORM\EntityManager;
 use Models\Usuario;
 
+
 /**
  * Description of ControleUsuario
  *
@@ -42,10 +43,11 @@ class ControleUsuario{
         $repository = $this->em->getRepository('Models\Usuario');
         
         $u = $repository->findBy(["email" => $email]);
-        if(!empty($u) && ($u->getSenha() === $senha)){
-            header("location: /chat");
+        //print_r($u);
+        if(!empty($u) && ($u[0]->getSenha() === $senha)){
+            return true;
         } else {
-            return "Email não encontrado ou senha incorreta.";
+            echo "Email não encontrado ou senha incorreta.";
         }
     }
 }

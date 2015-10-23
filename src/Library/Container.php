@@ -20,7 +20,7 @@ use Respect\Rest\Router;
 class Container {
     //put your code here
     
-    private function getDataBaseParams() {
+    protected static function getDataBaseParams() {
         $confgFile = __DIR__ . '/../minichat3des.ini';
         if (file_exists($confgFile)) {
             
@@ -67,7 +67,7 @@ class Container {
         $config->setMetadataDriverImpl($driver);
         $config->setMetadataCacheImpl($cache);
         
-        $dbConf = $this->getDataBaseParams();
+        $dbConf = self::getDataBaseParams();
         
         //getting EntityManager
         $entityManager = EntityManager::create($dbConf, $config);

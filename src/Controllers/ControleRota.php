@@ -21,15 +21,17 @@ class ControleRota {
     
     public function __construct() {
         $myRouter = Container::getRouter();
-        $this->postCadUser();
+        
         $this->pageDefault($myRouter);
         $this->pageChat($myRouter);
+        $this->postCadUser($myRouter);
+        $this->postLoginUser($myRouter);
     }
 
     public function pageChat(Router $r) {
         $r->get("/chat", function() {
             $fs = Container::getTwigLoderFileSystem(__DIR__ . "/../../public/");
-            $options = ["auto_reload" => true];
+            $options = ["auto_reload" => true, "cache" => __DIR__ . "/../../public/cache"];
             $twig = Container::getTwigEnvironment($fs, $options);
             $index = new Inicial($twig);
             $index->exibir('chat.html');
@@ -39,7 +41,7 @@ class ControleRota {
     public function pageDefault(Router $r) {
         $r->get("/", function() {
             $fs = Container::getTwigLoderFileSystem(__DIR__ . "/../../public/");
-            $options = ["auto_reload" => true];
+            $options = ["auto_reload" => true, "cache" => __DIR__ . "/../../public/cache"];
             $twig = Container::getTwigEnvironment($fs, $options);
             $index = new Inicial($twig);
             $index->exibir('default.html');
@@ -47,9 +49,7 @@ class ControleRota {
     }
     
     public function postCadUser(Router $r) {
-        $r = new Router;
         $r->post('/ajax/ControleUsuario/cadastrar/**', function($uinfo){
-            
             
             // lê o conteúdo do arquivo para uma string
             $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
@@ -74,11 +74,23 @@ class ControleRota {
     }
     
     public function postLoginUser(Router $r) {
-        $r = new Router;
         $r->post('/ajax/ControleUsuario/login/*/*', function($email, $senha) {
             $em = Container::gerEntityManager();
             $c = new ControleUsuario($em);
-            $c->login(["email" => $email, "senha" => $senha]);
+            
+            $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
+            $jsrc = json_decode($json_str, true);
+            extract($jsrc);
+            
+            $login = array(
+                "email" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($email), MCRYPT_MODE_CBC, hexToString($iv)),
+                "senha" => $senha
+            );
+            
+            $rsp = $c->login($login);
+            if($rsp){
+                header("/chat");
+            }
         });        
     }
 }

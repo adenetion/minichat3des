@@ -32,6 +32,26 @@ $("#btnLogin").on('click', function(){
         mail = stringToHex(des(s.k, mail, 1, 1, hexToString(s.iv)));
         password = stringToHex(des(s.k, password, 1, 1, hexToString(s.iv)));
         
-        alert(mail + "\n" + password);
+        var url = '/ajax/ControleUsuario/login/'
+                + mail + "/"
+                + password;
+        
+        console.info(url);
+        
+        var options = {
+            type: 'post',
+            async: false,
+            success: function(data){
+                if(data === ""){
+                    window.location.assign("http://minichat3des.org/chat");
+                } else {
+                    alert(data);
+                }
+                
+                $("#dlgLogin").modal('hide');
+            }
+        };
+        
+        $.ajax(url, options);
     }
 });
