@@ -6,13 +6,9 @@ require_once __DIR__ . '/../Library/cypher3des.php';
 
 use Respect\Rest\Router;
 use Controllers\ControleUsuario;
-use Controllers\ControleMensagem;
 use Models\Usuario;
-use Models\Mensagem;
 use Library\Container;
-use Library\Sessao;
 use Viewers\Inicial;
-use Viewers\Chat;
 
 /**
  * Description of ControleRota
@@ -30,7 +26,6 @@ class ControleRota {
         $this->pageChat($myRouter);
         $this->postCadUser($myRouter);
         $this->postLoginUser($myRouter);
-        $this->getMensagens($myRouter);
     }
 
     public function pageChat(Router $r) {
@@ -38,10 +33,8 @@ class ControleRota {
             $fs = Container::getTwigLoderFileSystem(__DIR__ . "/../../public/");
             $options = ["auto_reload" => true, "cache" => __DIR__ . "/../../public/cache"];
             $twig = Container::getTwigEnvironment($fs, $options);
-            $chat = new Chat($twig);
-            $s = Container::getSession();
-            $chat->add('usuario', $s->get('usuario'));
-            $chat->exibir('chat.html');
+            $index = new Inicial($twig);
+            $index->exibir('chat.html');
         });
     }
     
@@ -59,7 +52,8 @@ class ControleRota {
         $r->post('/ajax/ControleUsuario/cadastrar/**', function($uinfo){
             
             // lê o conteúdo do arquivo para uma string
-            $jsrc = Container::getCrytoParams();
+            $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
+            $jsrc = json_decode($json_str, true);
             extract($jsrc);
             
             $ud = array(
@@ -84,44 +78,26 @@ class ControleRota {
             $em = Container::gerEntityManager();
             $c = new ControleUsuario($em);
             
-            
-            $jsrc = Container::getCrytoParams();
+            $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
+            $jsrc = json_decode($json_str, true);
             extract($jsrc);
             
             $login = array(
                 "email" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($email), MCRYPT_MODE_CBC, hexToString($iv)),
                 "senha" => $senha
             );
-            $sessao = Container::getSession();
-            $rsp = $c->login($login, $sessao);
+            
+            $rsp = $c->login($login);
             if($rsp){
                 header("/chat");
             }
         });        
     }
     
-    public function getMensagens(Router $r){
-        $r->get("/ajax/ControleMensagem/listar", function() {
-            $em = Container::gerEntityManager();
-            $mc = new ControleMensagem($em);
-            
-            return json_encode($mc->listar());
-        });
-    }
     
-    public function postEnviarMensagem(Router $r) {
-        $r->post("/ajax/ControleMensagem/enviar/*/*", function($userID, $txtmsg) {
-            $jsrc = Container::getCrytoParams();
-            extract($jsrc);
+    public function getValidarUsuario(Router $r) {
+        $r->get("/ControleUsuario/validar/*/*/*", function ($email, $fullname, $nick) {
             
-            $em = Container::gerEntityManager();
-            $mc = new ControleMensagem($em);
-            $rp = $em->getRepository('Models\Usuario');
-            $u = $rp->findBy(["usId" => $userID]);
-            $user = $u[0];
-            $msg = new Mensagem();
-            $encrypted = mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($txtmsg), MCRYPT_MODE_CBC, hexToString($iv));
-            $mc->enviar($msg, $user, $encrypted);
         });
     }
 }

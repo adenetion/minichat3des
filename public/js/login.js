@@ -1,5 +1,5 @@
 
-$("frmLogin").validate({
+$("#frmLogin").validate({
     rules: {
         email: { required: true, email: true },
         senha: {required: true, minlength: 6 }
@@ -10,14 +10,8 @@ $("frmLogin").validate({
             required: "Registre uma senha.",
             minlength: "No mínimo seis caracteres"
        }
-    }
-});
-
-var form = $("#frmLogin");
-
-$("#btnLogin").on('click', function(){
-    form.validate();
-    if(form.valid()){
+    },
+    submitHandler: function(form){
         var mail = $('#loginEmail').val();
         var password = $('#loginPassword').val();
         
@@ -47,8 +41,6 @@ $("#btnLogin").on('click', function(){
                 } else {
                     alert(data);
                 }
-                
-                $("#dlgLogin").modal('hide');
             }
         };
         

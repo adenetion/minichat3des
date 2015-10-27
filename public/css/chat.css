@@ -9,13 +9,19 @@ textarea.form-control {
 
 label.control-label{
     margin-top: 30px;
-    padding-left: 30px;
+    padding-left: 35px;
 }
 
 .chat-panel {
+    border-top: 2px solid #BDC3C7;
+    border-left: 2px solid #BDC3C7;
     background-color: #FFFFFF;
     border-radius: 15px;
     height: 350px;
     overflow-y: auto;
     box-shadow: 3px 3px 4px #737373;
 }
+
+.marg-top0 { margin-top: 0; }
+.marg-top5 { margin-top: 5px; }
+.nick{ font-weight: bold; }

@@ -1,8 +1,13 @@
 <?php
 namespace Controllers;
 
+require_once __DIR__ . '/../Library/cypher3des.php';
+
 use Doctrine\ORM\EntityManager;
 use Models\Usuario;
+use Models\Mensagem;
+use Library\Sessao;
+use Controllers\ControleMensagem;
 
 
 /**
@@ -32,22 +37,36 @@ class ControleUsuario{
         try {
             $this->em->persist($u);
             $this->em->flush();
+            echo "Usuario Cadastrado com sucesso";
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
     }
     
-    public function login(array $dados) {
+    public function login(array $dados, Sessao $s) {
         extract($dados);
         
         $repository = $this->em->getRepository('Models\Usuario');
         
         $u = $repository->findBy(["email" => $email]);
-        //print_r($u);
-        if(!empty($u) && ($u[0]->getSenha() === $senha)){
-            return true;
+        
+        $user = $u[0];
+        
+        if(!($user instanceof Usuario)){
+            echo "Email não encontrado";
+        } elseif ($user->getSenha() !== $senha) {
+            echo "Senha incorreta.";
+        } elseif ($user->getVerificado() === 0) {
+            echo "Seu email ainda não foi validado.";
         } else {
-            echo "Email não encontrado ou senha incorreta.";
+            $udata["id"] = $user->getUsId();
+            $udata["apelido"] = $user->getApelido();
+            $udata["nome"] = $user->getNome() . " " . $user->getSobrenome();
+            $s->set("usuario", $udata);
+            $mc = new ControleMensagem($this->em);
+            $msg = new \Models\Mensagem();
+            $mc->enviar($msg, $user, "Entrou no chat");
+            return true;
         }
     }
 }

@@ -11,6 +11,7 @@ use Doctrine\Common\ClassLoader;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Respect\Rest\Router;
+use Library\Sessao;
 
 /**
  * Description of Container
@@ -20,7 +21,8 @@ use Respect\Rest\Router;
 class Container {
     //put your code here
     
-    protected static function getDataBaseParams() {
+    protected static function getDataBaseParams() 
+    {
         $confgFile = __DIR__ . '/../minichat3des.ini';
         if (file_exists($confgFile)) {
             
@@ -38,6 +40,12 @@ class Container {
         } else {
             throw new RuntimeException("DataBase configuration file not found.", 1);
         }
+    }
+    
+    public static function getCrytoParams() 
+    {
+        $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
+        return json_decode($json_str, true);
     }
     
     public static function gerEntityManager()
@@ -103,5 +111,11 @@ class Container {
     public static function getRouter()
     {
         return new \Respect\Rest\Router();
+    }
+    
+    
+    public static function getSession() 
+    {
+        return Sessao::instanciar();
     }
 }

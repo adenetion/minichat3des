@@ -59,21 +59,26 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
                 </div>
                 <div class=\"row\">
                     <div class=\"col-md-10 col-md-offset-1 chat-panel\">
-                        
                     </div>
                 </div>
                 <div class=\"row \" style=\"padding: 10px 0\">
-                    <form id=\"frmMsg\" class=\"form-inline\" role=\"form\">
-                        <div class=\"form-group-lg\">
+                    <form id=\"frmMsg\" class=\"form-inline\" action=\"#\" method=\"post\" role=\"form\">
+                        <div class=\"form-group-md\">
+                            <input type=\"hidden\" name=\"id_user\" id=\"userID\" value=\"";
+        // line 49
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["usuario"]) ? $context["usuario"] : null), "id", array()), "html", null, true);
+        echo "\">
                             <label class=\"control-label col-md-1 text-right\">Mensagem: </label>
                             <div class=\"col-md-10\">
-                                <textarea class=\"form-control\" 
+                                <textarea class=\"form-control\" name=\"mensagem\" 
+                                id = \"txtmsg\"
                                 style=\"width: 98%;\"
                                 required placeholder=\"Sua mensagem\"></textarea>
                                 
                             </div>
                         </div>
-                        <input class=\"btn btn-info btn-sm\" type=\"button\" value=\"Enviar\" >
+                        <input class=\"btn btn-info btn-sm marg-bottom5 marg-top0\" type=\"submit\" value=\"Enviar\" >
+                        <input class=\"btn btn-danger btn-sm marg-bottom5 marg-top0\" type=\"button\" value=\"Sair\">
                     </form>
                 </div>
             </div>
@@ -81,6 +86,9 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
                 <p>&COPY; 2015 UEA - Universidade do Estado do Amazonas</p>
             </footer>
         </div>
+        <script src=\"public/js/jquery.validate.min.js\" type=\"text/javascript\"></script>
+        <script src=\"public/js/messages_pt_BR.min.js\" type=\"text/javascript\"></script>
+        <script src=\"public/js/chat.js\" type=\"text/javascript\"></script>
     </body>
 </html>
 <!--<div></div>-->";
@@ -91,9 +99,14 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
         return "chat.html";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  19 => 1,);
+        return array (  69 => 49,  19 => 1,);
     }
 }
 /* <!DOCTYPE html>*/
@@ -139,21 +152,23 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*                 </div>*/
 /*                 <div class="row">*/
 /*                     <div class="col-md-10 col-md-offset-1 chat-panel">*/
-/*                         */
 /*                     </div>*/
 /*                 </div>*/
 /*                 <div class="row " style="padding: 10px 0">*/
-/*                     <form id="frmMsg" class="form-inline" role="form">*/
-/*                         <div class="form-group-lg">*/
+/*                     <form id="frmMsg" class="form-inline" action="#" method="post" role="form">*/
+/*                         <div class="form-group-md">*/
+/*                             <input type="hidden" name="id_user" id="userID" value="{{usuario.id}}">*/
 /*                             <label class="control-label col-md-1 text-right">Mensagem: </label>*/
 /*                             <div class="col-md-10">*/
-/*                                 <textarea class="form-control" */
+/*                                 <textarea class="form-control" name="mensagem" */
+/*                                 id = "txtmsg"*/
 /*                                 style="width: 98%;"*/
 /*                                 required placeholder="Sua mensagem"></textarea>*/
 /*                                 */
 /*                             </div>*/
 /*                         </div>*/
-/*                         <input class="btn btn-info btn-sm" type="button" value="Enviar" >*/
+/*                         <input class="btn btn-info btn-sm marg-bottom5 marg-top0" type="submit" value="Enviar" >*/
+/*                         <input class="btn btn-danger btn-sm marg-bottom5 marg-top0" type="button" value="Sair">*/
 /*                     </form>*/
 /*                 </div>*/
 /*             </div>*/
@@ -161,6 +176,9 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*                 <p>&COPY; 2015 UEA - Universidade do Estado do Amazonas</p>*/
 /*             </footer>*/
 /*         </div>*/
+/*         <script src="public/js/jquery.validate.min.js" type="text/javascript"></script>*/
+/*         <script src="public/js/messages_pt_BR.min.js" type="text/javascript"></script>*/
+/*         <script src="public/js/chat.js" type="text/javascript"></script>*/
 /*     </body>*/
 /* </html>*/
 /* <!--<div></div>-->*/

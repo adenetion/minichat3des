@@ -33,14 +33,8 @@ $("#frmCadUser").validate({
            minlength: "No mínimo seis caracteres",
            equalTo: "Repita a senha."
        }
-    }
-});
-
-var form = $("#frmCadUser");
-
-$('#cadSubmit').on('click',function(){
-    form.validate();
-    if(form.valid()){
+    },
+    submitHandler: function(form){
         //obtendo os dados do formulário
         var mail = $('#cadEmail').val();
         var name = $('#cadNome').val();
@@ -49,7 +43,7 @@ $('#cadSubmit').on('click',function(){
         var password = $('#cadPassword').val();
 
 
-        //encriptando os dados des (key, message, 1, 1, "HookL337");
+        //encriptando os dados
         var options = {
             type: 'get',
             async: false,

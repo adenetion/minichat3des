@@ -98,7 +98,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
                                         </div>
                                     </div>
                                     <div class=\"form-group text-center\">
-                                        <button id=\"btnLogin\" type=\"button\" class=\"btn btn-danger btn-sm\">Entrar</button>
+                                        <button id=\"btnLogin\" type=\"submit\" class=\"btn btn-danger btn-sm\">Entrar</button>
                                     </div>
                                 </form>
                             </div>
@@ -211,7 +211,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
                                         </div>
                                     </div>
                                     <div class=\"form-group text-center\">
-                                        <button type=\"button\" id=\"cadSubmit\" class=\"btn btn-info btn-sm\">Cadastrar</button>
+                                        <button type=\"submit\" id=\"cadSubmit\" class=\"btn btn-info btn-sm\">Cadastrar</button>
                                     </div>
                                 </form>
                             </div>
@@ -224,6 +224,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
             </div>
         </div>
         <script src=\"public/js/jquery.validate.min.js\" type=\"text/javascript\"></script>
+        <script src=\"public/js/messages_pt_BR.min.js\" type=\"text/javascript\"></script>
         <script src=\"public/js/cadastro.js\" type=\"text/javascript\"></script>
         <script src=\"public/js/login.js\" type=\"text/javascript\"></script>
     </body>
@@ -322,7 +323,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
 /*                                         </div>*/
 /*                                     </div>*/
 /*                                     <div class="form-group text-center">*/
-/*                                         <button id="btnLogin" type="button" class="btn btn-danger btn-sm">Entrar</button>*/
+/*                                         <button id="btnLogin" type="submit" class="btn btn-danger btn-sm">Entrar</button>*/
 /*                                     </div>*/
 /*                                 </form>*/
 /*                             </div>*/
@@ -435,7 +436,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
 /*                                         </div>*/
 /*                                     </div>*/
 /*                                     <div class="form-group text-center">*/
-/*                                         <button type="button" id="cadSubmit" class="btn btn-info btn-sm">Cadastrar</button>*/
+/*                                         <button type="submit" id="cadSubmit" class="btn btn-info btn-sm">Cadastrar</button>*/
 /*                                     </div>*/
 /*                                 </form>*/
 /*                             </div>*/
@@ -448,6 +449,7 @@ class __TwigTemplate_c77cef6e512e754e53dcbddb4e36884869eee21d8103ffc33531f575785
 /*             </div>*/
 /*         </div>*/
 /*         <script src="public/js/jquery.validate.min.js" type="text/javascript"></script>*/
+/*         <script src="public/js/messages_pt_BR.min.js" type="text/javascript"></script>*/
 /*         <script src="public/js/cadastro.js" type="text/javascript"></script>*/
 /*         <script src="public/js/login.js" type="text/javascript"></script>*/
 /*     </body>*/
