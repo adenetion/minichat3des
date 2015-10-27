@@ -100,3 +100,16 @@ $("form").on('submit', function(e){
         console.info(data);
     }
 });
+
+$("#btnSair").on('click',function(){
+    var options = {
+        type: 'post',
+        async: false,
+        success: function(data){
+            alert(data);
+            window.location.assign("http://minichat3des.org/");
+        }
+    };
+    
+    var s = $.ajax('/ajax/ControleUsuario/logout', options);
+});

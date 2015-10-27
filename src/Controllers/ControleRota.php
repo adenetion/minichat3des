@@ -31,12 +31,14 @@ class ControleRota {
         $this->postLoginUser($myRouter);
         $this->getMensagens($myRouter);
         $this->postEnviarMensagem($myRouter);
+        $this->postLoguot($myRouter);
     }
 
     public function pageChat(Router $r) {
         $r->get("/chat", function() {
             $fs = Container::getTwigLoderFileSystem(__DIR__ . "/../../public/");
-            $options = ["auto_reload" => true, "cache" => __DIR__ . "/../../public/cache"];
+            $options = ["auto_reload" => true, 
+                        "cache" => __DIR__ . "/../../public/cache"];
             $twig = Container::getTwigEnvironment($fs, $options);
             $chat = new Chat($twig);
             $s = Container::getSession();
@@ -48,7 +50,8 @@ class ControleRota {
     public function pageDefault(Router $r) {
         $r->get("/", function() {
             $fs = Container::getTwigLoderFileSystem(__DIR__ . "/../../public/");
-            $options = ["auto_reload" => true, "cache" => __DIR__ . "/../../public/cache"];
+            $options = ["auto_reload" => true, 
+                        "cache" => __DIR__ . "/../../public/cache"];
             $twig = Container::getTwigEnvironment($fs, $options);
             $index = new Inicial($twig);
             $index->exibir('default.html');
@@ -113,7 +116,12 @@ class ControleRota {
             extract($jsrc);
             
             $login = array(
-                "email" => mcrypt_decrypt(MCRYPT_3DES, safeHexToString($k), hexToString($email), MCRYPT_MODE_CBC, safeHexToString($iv)),
+                "email" => mcrypt_decrypt(
+                            MCRYPT_3DES, 
+                            safeHexToString($k), 
+                            hexToString($email), 
+                            MCRYPT_MODE_CBC, 
+                            safeHexToString($iv)),
                 "senha" => $senha
             );
             $sessao = Container::getSession();
@@ -134,18 +142,34 @@ class ControleRota {
     }
     
     public function postEnviarMensagem(Router $r) {
-        $r->post("/ajax/ControleMensagem/enviar/*/*", function($userID, $txtmsg) {
-            $jsrc = Container::getCrytoParams();
-            extract($jsrc);
-            
-            $em = Container::gerEntityManager();
-            $mc = new ControleMensagem($em);
-            $rp = $em->getRepository('Models\Usuario');
-            $u = $rp->findBy(["usId" => $userID]);
-            $user = $u[0];
-            $msg = new Mensagem();
-            $decrypted = mcrypt_decrypt(MCRYPT_3DES, safeHexToString($k), hexToString($txtmsg), MCRYPT_MODE_CBC, safeHexToString($iv));
-            $mc->enviar($msg, $user, $decrypted);
+        $r->post("/ajax/ControleMensagem/enviar/*/*", 
+            function($userID, $txtmsg) {
+                $jsrc = Container::getCrytoParams();
+                extract($jsrc);
+
+                $em = Container::gerEntityManager();
+                $mc = new ControleMensagem($em);
+                $rp = $em->getRepository('Models\Usuario');
+                $u = $rp->findBy(["usId" => $userID]);
+                $user = $u[0];
+                $msg = new Mensagem();
+                $decrypted = mcrypt_decrypt(
+                                MCRYPT_3DES, 
+                                safeHexToString($k), 
+                                hexToString($txtmsg), 
+                                MCRYPT_MODE_CBC, 
+                                safeHexToString($iv)
+                            );
+                $mc->enviar($msg, $user, $decrypted);
+            }
+        );
+    }
+    
+    public function postLoguot(Router $r) {
+        $r->post("/ajax/ControleUsuario/logout", function() {
+            $sessao = Container::getSession();
+            $sessao->unsetKey("usuario");
+            echo "Loged out";
         });
     }
 }

@@ -78,7 +78,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
                             </div>
                         </div>
                         <input class=\"btn btn-info btn-sm marg-bottom5 marg-top0\" type=\"submit\" value=\"Enviar\" >
-                        <input class=\"btn btn-danger btn-sm marg-bottom5 marg-top0\" type=\"button\" value=\"Sair\">
+                        <input id=\"btnSair\" class=\"btn btn-danger btn-sm marg-bottom5 marg-top0\" type=\"button\" value=\"Sair\">
                     </form>
                 </div>
             </div>
@@ -168,7 +168,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*                             </div>*/
 /*                         </div>*/
 /*                         <input class="btn btn-info btn-sm marg-bottom5 marg-top0" type="submit" value="Enviar" >*/
-/*                         <input class="btn btn-danger btn-sm marg-bottom5 marg-top0" type="button" value="Sair">*/
+/*                         <input id="btnSair" class="btn btn-danger btn-sm marg-bottom5 marg-top0" type="button" value="Sair">*/
 /*                     </form>*/
 /*                 </div>*/
 /*             </div>*/

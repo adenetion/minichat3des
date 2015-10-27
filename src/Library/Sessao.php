@@ -35,7 +35,19 @@ class Sessao {
         $_SESSION[$chave] = $valor;
         session_write_close();
     }
- 
+    
+    public function unsetKey($chave) {
+        session_start();
+        if($this->existe($chave)){
+            session_start();
+            unset($_SESSION[$chave]);
+            session_write_close();
+        } else {
+            throw new \UnexpectedValueException("Chave não encontrada na sessão.");
+        }
+        
+    }
+    
     public function get($chave) {
         session_start();
         $value = $_SESSION[$chave];
