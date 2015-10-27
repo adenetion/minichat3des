@@ -21,7 +21,7 @@
         <script src="public/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="public/js/des.js" type="text/javascript"></script>
     </head>
-    <body>
+    <body onload="javascript:updateMsgPanel();">
         <div class="container-fluid">
             <header>
                 <div class="row">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1 chat-panel">
+                    <div id="chatPanel" class="col-md-10 col-md-offset-1 chat-panel">
                     </div>
                 </div>
                 <div class="row " style="padding: 10px 0">

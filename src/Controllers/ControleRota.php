@@ -10,7 +10,6 @@ use Controllers\ControleMensagem;
 use Models\Usuario;
 use Models\Mensagem;
 use Library\Container;
-use Library\Sessao;
 use Viewers\Inicial;
 use Viewers\Chat;
 
@@ -31,6 +30,7 @@ class ControleRota {
         $this->postCadUser($myRouter);
         $this->postLoginUser($myRouter);
         $this->getMensagens($myRouter);
+        $this->postEnviarMensagem($myRouter);
     }
 
     public function pageChat(Router $r) {
@@ -63,10 +63,34 @@ class ControleRota {
             extract($jsrc);
             
             $ud = array(
-                "email" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($uinfo[0]), MCRYPT_MODE_CBC, hexToString($iv)),
-                "nome" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($uinfo[1]), MCRYPT_MODE_CBC, hexToString($iv)),
-                "sobrenome" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($uinfo[2]), MCRYPT_MODE_CBC, hexToString($iv)),
-                "apelido" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($uinfo[3]), MCRYPT_MODE_CBC, hexToString($iv)),
+                "email" => mcrypt_decrypt(
+                            MCRYPT_3DES, 
+                            safeHexToString($k), 
+                            safeHexToString($uinfo[0]), 
+                            MCRYPT_MODE_CBC, 
+                            safeHexToString($iv)),
+                
+                "nome" => mcrypt_decrypt(
+                            MCRYPT_3DES, 
+                            safeHexToString($k), 
+                            safeHexToString($uinfo[1]), 
+                            MCRYPT_MODE_CBC, 
+                            safeHexToString($iv)),
+                
+                "sobrenome" => mcrypt_decrypt(
+                            MCRYPT_3DES, 
+                            safeHexToString($k), 
+                            safeHexToString($uinfo[2]), 
+                            MCRYPT_MODE_CBC, 
+                            safeHexToString($iv)),
+                
+                "apelido" => mcrypt_decrypt(
+                            MCRYPT_3DES, 
+                            safeHexToString($k), 
+                            safeHexToString($uinfo[3]), 
+                            MCRYPT_MODE_CBC, 
+                            safeHexToString($iv)),
+                
                 "senha" => $uinfo[4]
             );
             
@@ -89,7 +113,7 @@ class ControleRota {
             extract($jsrc);
             
             $login = array(
-                "email" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($email), MCRYPT_MODE_CBC, hexToString($iv)),
+                "email" => mcrypt_decrypt(MCRYPT_3DES, safeHexToString($k), hexToString($email), MCRYPT_MODE_CBC, safeHexToString($iv)),
                 "senha" => $senha
             );
             $sessao = Container::getSession();
@@ -120,8 +144,8 @@ class ControleRota {
             $u = $rp->findBy(["usId" => $userID]);
             $user = $u[0];
             $msg = new Mensagem();
-            $encrypted = mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($txtmsg), MCRYPT_MODE_CBC, hexToString($iv));
-            $mc->enviar($msg, $user, $encrypted);
+            $decrypted = mcrypt_decrypt(MCRYPT_3DES, safeHexToString($k), hexToString($txtmsg), MCRYPT_MODE_CBC, safeHexToString($iv));
+            $mc->enviar($msg, $user, $decrypted);
         });
     }
 }

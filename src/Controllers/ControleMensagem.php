@@ -7,6 +7,7 @@ require_once __DIR__ . '/../Library/cypher3des.php';
 use Doctrine\ORM\EntityManager;
 use Models\Mensagem;
 use Models\Usuario;
+use Library\Container;
 
 
 /**
@@ -47,35 +48,32 @@ class ControleMensagem {
     
     
     public function listar() {
-        //$dql = 'SELECT m, u FROM Mensagem m JOIN u.usId ORDER BY m.dataTs DESC';
-        //'SELECT m FROM Models\Mensagem m ORDER BY m.data_ts DESC'
-        
-//        $messages = $this->em->getRepository('Models\Mensagem')
-//                ->createQueryBuilder('m')
-//                ->select('m')
-//                ->orderBy('m.dataTs', 'DESC')
-//                ->getQuery()
-//                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-        
-        $messages = $this->em->createQuery('SELECT m, u.apelido FROM Models\Mensagem m JOIN m.usuario u ORDER BY m.dataTs DESC')
-                ->setMaxResults(10)
+        $dql = 'SELECT m, u.apelido FROM Models\Mensagem m '
+             . 'JOIN m.usuario u ORDER BY m.dataTs DESC';
+        $messages = $this->em->createQuery($dql)->setMaxResults(10)
                 ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         
         
-        $json_str = file_get_contents("/var/www/minichat3des/public/js/srp.json");
-        $jsrc = json_decode($json_str, true);
-        extract($jsrc);
+        $json = Container::getCrytoParams();
+        extract($json);
         
         foreach ($messages as $msg) {
+            $encrypted = mcrypt_encrypt(
+                            MCRYPT_3DES,
+                            safeHexToString($k),
+                            trim($msg[0]["conteudo"]),
+                            MCRYPT_MODE_CBC,
+                            safeHexToString($iv)
+                         );
             $item = [
                 "nick" => trim($msg["apelido"]),
-                "mensagem" => $msg[0]["conteudo"],
+                "mensagem" => stringToHex($encrypted),
                 "hora" => $msg[0]["dataTs"]->format('h:i:s')
             ];
             $resp[] = $item;
         }
-        print_r($resp);
-        echo json_encode($resp);
-        return TRUE;
+        
+        echo json_encode($resp, JSON_UNESCAPED_UNICODE);
+        return "";
     }
 }

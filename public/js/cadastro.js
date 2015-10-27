@@ -52,12 +52,11 @@ $("#frmCadUser").validate({
 
         var s = $.ajax('public/js/srp.json', options).responseJSON;
 
-        mail = stringToHex(des(s.k, mail, 1, 1, hexToString(s.iv)));
-        name = stringToHex(des(s.k, name, 1, 1, hexToString(s.iv)));
-        lastname = stringToHex(des(s.k, lastname, 1, 1, hexToString(s.iv)));
-        nick = stringToHex(des(s.k, nick, 1, 1, hexToString(s.iv)));
-        password = stringToHex(des(s.k, password, 1, 1, hexToString(s.iv)));
-
+        mail = stringToHex(des(hexToString(s.k), mail, 1, 1, hexToString(s.iv)));
+        name = stringToHex(des(hexToString(s.k), name, 1, 1, hexToString(s.iv)));
+        lastname = stringToHex(des(hexToString(s.k), lastname, 1, 1, hexToString(s.iv)));
+        nick = stringToHex(des(hexToString(s.k), nick, 1, 1, hexToString(s.iv)));
+        password = stringToHex(des(hexToString(s.k), password, 1, 1, hexToString(s.iv)));
 
         //juntando os dados em um objeto
         var data = {

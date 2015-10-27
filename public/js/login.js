@@ -23,8 +23,8 @@ $("#frmLogin").validate({
 
         var s = $.ajax('public/js/srp.json', options).responseJSON;
         
-        mail = stringToHex(des(s.k, mail, 1, 1, hexToString(s.iv)));
-        password = stringToHex(des(s.k, password, 1, 1, hexToString(s.iv)));
+        mail = stringToHex(des(hexToString(s.k), mail, 1, 1, hexToString(s.iv)));
+        password = stringToHex(des(hexToString(s.k), password, 1, 1, hexToString(s.iv)));
         
         var url = '/ajax/ControleUsuario/login/'
                 + mail + "/"

@@ -39,7 +39,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
         <script src=\"public/js/bootstrap.min.js\" type=\"text/javascript\"></script>
         <script src=\"public/js/des.js\" type=\"text/javascript\"></script>
     </head>
-    <body>
+    <body onload=\"javascript:updateMsgPanel();\">
         <div class=\"container-fluid\">
             <header>
                 <div class=\"row\">
@@ -58,7 +58,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
                     </div>
                 </div>
                 <div class=\"row\">
-                    <div class=\"col-md-10 col-md-offset-1 chat-panel\">
+                    <div id=\"chatPanel\" class=\"col-md-10 col-md-offset-1 chat-panel\">
                     </div>
                 </div>
                 <div class=\"row \" style=\"padding: 10px 0\">
@@ -132,7 +132,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*         <script src="public/js/bootstrap.min.js" type="text/javascript"></script>*/
 /*         <script src="public/js/des.js" type="text/javascript"></script>*/
 /*     </head>*/
-/*     <body>*/
+/*     <body onload="javascript:updateMsgPanel();">*/
 /*         <div class="container-fluid">*/
 /*             <header>*/
 /*                 <div class="row">*/
@@ -151,7 +151,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*                     </div>*/
 /*                 </div>*/
 /*                 <div class="row">*/
-/*                     <div class="col-md-10 col-md-offset-1 chat-panel">*/
+/*                     <div id="chatPanel" class="col-md-10 col-md-offset-1 chat-panel">*/
 /*                     </div>*/
 /*                 </div>*/
 /*                 <div class="row " style="padding: 10px 0">*/
