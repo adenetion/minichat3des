@@ -10,6 +10,7 @@ use Controllers\ControleMensagem;
 use Models\Usuario;
 use Models\Mensagem;
 use Library\Container;
+use Library\Sessao;
 use Viewers\Inicial;
 use Viewers\Chat;
 
@@ -24,6 +25,15 @@ class ControleRota {
     
     public function __construct() {
         $myRouter = Container::getRouter();
+        $mySession = Container::getSession();
+        
+        // Obtendo uma chave para a sessão atual.
+        $k = stringToHex(Container::getRandomCryptoKey());
+        if(!$mySession->existe("key")){$mySession->set("key", $k);}
+        
+        // Obtendo um vetor de inicialização para a sessão atual.
+        $iv = stringToHex(Container::getRandomCryptoIv());
+        if(!$mySession->existe("iv")){$mySession->set("iv", $iv);}
         
         $this->pageDefault($myRouter);
         $this->pageChat($myRouter);
@@ -32,6 +42,8 @@ class ControleRota {
         $this->getMensagens($myRouter);
         $this->postEnviarMensagem($myRouter);
         $this->postLoguot($myRouter);
+        $this->getCryptoKeySessao($myRouter);
+        $this->getCryptoIvSessao($myRouter);
     }
 
     public function pageChat(Router $r) {
@@ -60,41 +72,30 @@ class ControleRota {
     
     public function postCadUser(Router $r) {
         $r->post('/ajax/ControleUsuario/cadastrar/**', function($uinfo){
-            
-            // lê o conteúdo do arquivo para uma string
-            $jsrc = Container::getCrytoParams();
-            extract($jsrc);
+            $s = Container::getSession();
+            $k = safeHexToString($s->get("key"));
+            $iv = safeHexToString($s->get("iv"));
             
             $ud = array(
                 "email" => mcrypt_decrypt(
-                            MCRYPT_3DES, 
-                            safeHexToString($k), 
-                            safeHexToString($uinfo[0]), 
-                            MCRYPT_MODE_CBC, 
-                            safeHexToString($iv)),
+                            MCRYPT_3DES, $k, safeHexToString($uinfo[0]), 
+                            MCRYPT_MODE_CBC, $iv),
                 
                 "nome" => mcrypt_decrypt(
-                            MCRYPT_3DES, 
-                            safeHexToString($k), 
-                            safeHexToString($uinfo[1]), 
-                            MCRYPT_MODE_CBC, 
-                            safeHexToString($iv)),
+                            MCRYPT_3DES, $k, safeHexToString($uinfo[1]), 
+                            MCRYPT_MODE_CBC, $iv),
                 
                 "sobrenome" => mcrypt_decrypt(
-                            MCRYPT_3DES, 
-                            safeHexToString($k), 
-                            safeHexToString($uinfo[2]), 
-                            MCRYPT_MODE_CBC, 
-                            safeHexToString($iv)),
+                            MCRYPT_3DES, $k, safeHexToString($uinfo[2]), 
+                            MCRYPT_MODE_CBC, $iv),
                 
                 "apelido" => mcrypt_decrypt(
-                            MCRYPT_3DES, 
-                            safeHexToString($k), 
-                            safeHexToString($uinfo[3]), 
-                            MCRYPT_MODE_CBC, 
-                            safeHexToString($iv)),
+                            MCRYPT_3DES, $k, safeHexToString($uinfo[3]), 
+                            MCRYPT_MODE_CBC, $iv),
                 
-                "senha" => $uinfo[4]
+                "senha" => $uinfo[4], 
+                
+                "cadkey" => base64_encode($k), "cadiv" => base64_encode($iv)
             );
             
             $em = Container::gerEntityManager();
@@ -106,26 +107,49 @@ class ControleRota {
         });
     }
     
+    public function getCryptoKeySessao(Router $r) {
+        $r->get('/ajax/Sessao/Cryptokey', function(){
+            $s = Container::getSession();
+            if($s->existe("key")){
+                $key = $s->get('key');
+            } else {
+                return "Nao ha uma chave gerada nessa sessao.";
+            }
+            
+            return $key;
+        });
+    }
+    
+    public function getCryptoIvSessao(Router $r) { 
+        $r->get('/ajax/Sessao/Cryptoiv', function(){
+            $s = Container::getSession();
+            if($s->existe('iv')){
+                $iv = $s->get('iv');
+            } else {
+                return "Nao ha um vetor de inicializacao gerado nessa sessao.";
+            }
+            
+            return $iv;
+        });
+    }
+    
     public function postLoginUser(Router $r) {
         $r->post('/ajax/ControleUsuario/login/*/*', function($email, $senha) {
             $em = Container::gerEntityManager();
             $c = new ControleUsuario($em);
             
-            
-            $jsrc = Container::getCrytoParams();
-            extract($jsrc);
+            $s = Container::getSession();
+            $k = safeHexToString($s->get("key"));
+            $iv = safeHexToString($s->get("iv"));
             
             $login = array(
-                "email" => mcrypt_decrypt(
-                            MCRYPT_3DES, 
-                            safeHexToString($k), 
-                            hexToString($email), 
-                            MCRYPT_MODE_CBC, 
-                            safeHexToString($iv)),
-                "senha" => $senha
+                "email" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($email), 
+                                          MCRYPT_MODE_CBC, $iv),
+                "senha" => mcrypt_decrypt(MCRYPT_3DES, $k, hexToString($senha), 
+                                          MCRYPT_MODE_CBC, $iv),
             );
-            $sessao = Container::getSession();
-            $rsp = $c->login($login, $sessao);
+            
+            $rsp = $c->login($login, $s);
             if($rsp){
                 header("/chat");
             }
@@ -144,8 +168,10 @@ class ControleRota {
     public function postEnviarMensagem(Router $r) {
         $r->post("/ajax/ControleMensagem/enviar/*/*", 
             function($userID, $txtmsg) {
-                $jsrc = Container::getCrytoParams();
-                extract($jsrc);
+                $s = Container::getSession();
+                
+                $k = safeHexToString($s->get("key"));
+                $iv = safeHexToString($s->get("iv"));
 
                 $em = Container::gerEntityManager();
                 $mc = new ControleMensagem($em);
@@ -155,10 +181,10 @@ class ControleRota {
                 $msg = new Mensagem();
                 $decrypted = mcrypt_decrypt(
                                 MCRYPT_3DES, 
-                                safeHexToString($k), 
+                                $k, 
                                 hexToString($txtmsg), 
                                 MCRYPT_MODE_CBC, 
-                                safeHexToString($iv)
+                                $iv
                             );
                 $mc->enviar($msg, $user, $decrypted);
             }

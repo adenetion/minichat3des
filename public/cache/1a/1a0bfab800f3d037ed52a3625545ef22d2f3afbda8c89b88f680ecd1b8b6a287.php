@@ -21,6 +21,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
     <head>
         <title>MiniChat 3DES</title>
         <meta charset=\"UTF-8\">
+        <meta http-equiv=\"refresh\" content=\"15\">
         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
         <!-- Favicon -->
         <link rel=\"icon\" href=\"public/images/security-chat.svg\">
@@ -39,7 +40,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
         <script src=\"public/js/bootstrap.min.js\" type=\"text/javascript\"></script>
         <script src=\"public/js/des.js\" type=\"text/javascript\"></script>
     </head>
-    <body onload=\"javascript:updateMsgPanel();\">
+    <body>
         <div class=\"container-fluid\">
             <header>
                 <div class=\"row\">
@@ -65,7 +66,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
                     <form id=\"frmMsg\" class=\"form-inline\" action=\"#\" method=\"post\" role=\"form\">
                         <div class=\"form-group-md\">
                             <input type=\"hidden\" name=\"id_user\" id=\"userID\" value=\"";
-        // line 49
+        // line 50
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["usuario"]) ? $context["usuario"] : null), "id", array()), "html", null, true);
         echo "\">
                             <label class=\"control-label col-md-1 text-right\">Mensagem: </label>
@@ -106,7 +107,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 
     public function getDebugInfo()
     {
-        return array (  69 => 49,  19 => 1,);
+        return array (  70 => 50,  19 => 1,);
     }
 }
 /* <!DOCTYPE html>*/
@@ -114,6 +115,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*     <head>*/
 /*         <title>MiniChat 3DES</title>*/
 /*         <meta charset="UTF-8">*/
+/*         <meta http-equiv="refresh" content="15">*/
 /*         <meta name="viewport" content="width=device-width, initial-scale=1.0">*/
 /*         <!-- Favicon -->*/
 /*         <link rel="icon" href="public/images/security-chat.svg">*/
@@ -132,7 +134,7 @@ class __TwigTemplate_d1126e79d3e4486968f69d805b4781c72c74a3c5a856348d25f40c91ce6
 /*         <script src="public/js/bootstrap.min.js" type="text/javascript"></script>*/
 /*         <script src="public/js/des.js" type="text/javascript"></script>*/
 /*     </head>*/
-/*     <body onload="javascript:updateMsgPanel();">*/
+/*     <body>*/
 /*         <div class="container-fluid">*/
 /*             <header>*/
 /*                 <div class="row">*/

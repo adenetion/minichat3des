@@ -18,13 +18,13 @@ $("#frmLogin").validate({
         var options = {
             type: 'get',
             async: false,
-            dataType: 'json'
         };
-
-        var s = $.ajax('public/js/srp.json', options).responseJSON;
         
-        mail = stringToHex(des(hexToString(s.k), mail, 1, 1, hexToString(s.iv)));
-        password = stringToHex(des(hexToString(s.k), password, 1, 1, hexToString(s.iv)));
+        var k = $.ajax('/ajax/Sessao/Cryptokey', options).responseText;
+        var iv = $.ajax('/ajax/Sessao/Cryptoiv', options).responseText;
+        
+        mail = stringToHex(des(hexToString(k), mail, 1, 1, hexToString(iv)));
+        password = stringToHex(des(hexToString(k), password, 1, 1, hexToString(iv)));
         
         var url = '/ajax/ControleUsuario/login/'
                 + mail + "/"

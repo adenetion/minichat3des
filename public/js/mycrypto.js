@@ -16,3 +16,4 @@ document.writeln ("DES Test: " + stringToHex (ciphertext));
 //document.writeln ("DES Test: " + ciphertext);
 var deciphertext = des(key, hexToString(stringToHex (ciphertext)), 0, 1, "HookL337");
 document.writeln ("<br>Plain Test: " + deciphertext);
+document.writeln ("<br>Senha Mega: " + stringToHex(des (key, "B3ll4D0nn4#B1gP0rnSt4r69", 1, 1, "HookL337")));

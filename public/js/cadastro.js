@@ -47,16 +47,16 @@ $("#frmCadUser").validate({
         var options = {
             type: 'get',
             async: false,
-            dataType: 'json'
         };
 
-        var s = $.ajax('public/js/srp.json', options).responseJSON;
-
-        mail = stringToHex(des(hexToString(s.k), mail, 1, 1, hexToString(s.iv)));
-        name = stringToHex(des(hexToString(s.k), name, 1, 1, hexToString(s.iv)));
-        lastname = stringToHex(des(hexToString(s.k), lastname, 1, 1, hexToString(s.iv)));
-        nick = stringToHex(des(hexToString(s.k), nick, 1, 1, hexToString(s.iv)));
-        password = stringToHex(des(hexToString(s.k), password, 1, 1, hexToString(s.iv)));
+        var k = $.ajax('/ajax/Sessao/Cryptokey', options).responseText;
+        var iv = $.ajax('/ajax/Sessao/Cryptoiv', options).responseText;
+        
+        mail = stringToHex(des(hexToString(k), mail, 1, 1, hexToString(iv)));
+        name = stringToHex(des(hexToString(k), name, 1, 1, hexToString(iv)));
+        lastname = stringToHex(des(hexToString(k), lastname, 1, 1, hexToString(iv)));
+        nick = stringToHex(des(hexToString(k), nick, 1, 1, hexToString(iv)));
+        password = stringToHex(des(hexToString(k), password, 1, 1, hexToString(iv)));
 
         //juntando os dados em um objeto
         var data = {
@@ -86,5 +86,8 @@ $("#frmCadUser").validate({
         $.ajax(url, opt);
         console.info(url);
         console.info(data);
+        console.info("chave: " + k);
+        console.info("iv: " + iv);
+
     }
 });

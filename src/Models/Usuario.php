@@ -63,6 +63,20 @@ class Usuario
      */
     private $verificado = '0';
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cadkey", type="string", length=24, nullable=false)
+     */
+    private $cadkey;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cadiv", type="string", length=8, nullable=false)
+     */
+    private $cadiv;
+
 
 
     /**
@@ -217,5 +231,53 @@ class Usuario
     public function getVerificado()
     {
         return $this->verificado;
+    }
+
+    /**
+     * Set cadkey
+     *
+     * @param string $cadkey
+     *
+     * @return Usuario
+     */
+    public function setCadkey($cadkey)
+    {
+        $this->cadkey = $cadkey;
+
+        return $this;
+    }
+
+    /**
+     * Get cadkey
+     *
+     * @return string
+     */
+    public function getCadkey()
+    {
+        return $this->cadkey;
+    }
+
+    /**
+     * Set cadiv
+     *
+     * @param string $cadiv
+     *
+     * @return Usuario
+     */
+    public function setCadiv($cadiv)
+    {
+        $this->cadiv = $cadiv;
+
+        return $this;
+    }
+
+    /**
+     * Get cadiv
+     *
+     * @return string
+     */
+    public function getCadiv()
+    {
+        return $this->cadiv;
     }
 }

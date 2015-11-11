@@ -29,23 +29,23 @@ var updateMsgPanel = function(){
     var options = {
         type: 'get',
         async: false,
-        dataType: 'json'
     };
 
-    var s = $.ajax('public/js/srp.json', options).responseJSON;
+    var k = $.ajax('/ajax/Sessao/Cryptokey', options).responseText;
+    var iv = $.ajax('/ajax/Sessao/Cryptoiv', options).responseText;
 
     if(messages !== null && messages.length > 0){
         console.info(messages.length);
         $.each(messages, function(){
-            var linha = $('<div class="row marg-top5"></div>');
+            var linha = $('<div class="row marg-top10"></div>');
             var col_nick = $('<div class="col-sm-1 nick text-right">'
                             + this.nick +
                             '</div>');
             var col_msg = $('<div class="col-sm-10">'
                                 + 
-                                    des(hexToString(s.k), 
+                                    des(hexToString(k), 
                                         hexToString(this.mensagem), 
-                                        0, 1, hexToString(s.iv)) 
+                                        0, 1, hexToString(iv)) 
                                 + '</div>'
                            );
             var col_hora = $('<div class="col-sm-1 text-left">'
@@ -74,12 +74,12 @@ $("form").on('submit', function(e){
         var options = {
             type: 'get',
             async: false,
-            dataType: 'json'
         };
 
-        var s = $.ajax('public/js/srp.json', options).responseJSON;
+        var k = $.ajax('/ajax/Sessao/Cryptokey', options).responseText;
+        var iv = $.ajax('/ajax/Sessao/Cryptoiv', options).responseText;
 
-        var encText = stringToHex(des(hexToString(s.k), msg, 1, 1, hexToString(s.iv)));
+        var encText = stringToHex(des(hexToString(k), msg, 1, 1, hexToString(iv)));
 
         var url = "/ajax/ControleMensagem/enviar/"
                 + user + "/"
@@ -90,7 +90,7 @@ $("form").on('submit', function(e){
             async: false,
             success: function(data){
                 $("#frmMsg")[0].reset();
-                updateMsgPanel();
+                window.location.reload();
             }
         };
 
@@ -112,4 +112,8 @@ $("#btnSair").on('click',function(){
     };
     
     var s = $.ajax('/ajax/ControleUsuario/logout', options);
+});
+
+$(document).ready(function(){
+    setInterval(updateMsgPanel(), 500);
 });

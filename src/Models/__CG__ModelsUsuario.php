@@ -64,10 +64,10 @@ class Usuario extends \Models\Usuario implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Models\\Usuario' . "\0" . 'usId', '' . "\0" . 'Models\\Usuario' . "\0" . 'email', '' . "\0" . 'Models\\Usuario' . "\0" . 'apelido', '' . "\0" . 'Models\\Usuario' . "\0" . 'nome', '' . "\0" . 'Models\\Usuario' . "\0" . 'sobrenome', '' . "\0" . 'Models\\Usuario' . "\0" . 'senha', '' . "\0" . 'Models\\Usuario' . "\0" . 'verificado');
+            return array('__isInitialized__', '' . "\0" . 'Models\\Usuario' . "\0" . 'usId', '' . "\0" . 'Models\\Usuario' . "\0" . 'email', '' . "\0" . 'Models\\Usuario' . "\0" . 'apelido', '' . "\0" . 'Models\\Usuario' . "\0" . 'nome', '' . "\0" . 'Models\\Usuario' . "\0" . 'sobrenome', '' . "\0" . 'Models\\Usuario' . "\0" . 'senha', '' . "\0" . 'Models\\Usuario' . "\0" . 'verificado', '' . "\0" . 'Models\\Usuario' . "\0" . 'cadkey', '' . "\0" . 'Models\\Usuario' . "\0" . 'cadiv');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Models\\Usuario' . "\0" . 'usId', '' . "\0" . 'Models\\Usuario' . "\0" . 'email', '' . "\0" . 'Models\\Usuario' . "\0" . 'apelido', '' . "\0" . 'Models\\Usuario' . "\0" . 'nome', '' . "\0" . 'Models\\Usuario' . "\0" . 'sobrenome', '' . "\0" . 'Models\\Usuario' . "\0" . 'senha', '' . "\0" . 'Models\\Usuario' . "\0" . 'verificado');
+        return array('__isInitialized__', '' . "\0" . 'Models\\Usuario' . "\0" . 'usId', '' . "\0" . 'Models\\Usuario' . "\0" . 'email', '' . "\0" . 'Models\\Usuario' . "\0" . 'apelido', '' . "\0" . 'Models\\Usuario' . "\0" . 'nome', '' . "\0" . 'Models\\Usuario' . "\0" . 'sobrenome', '' . "\0" . 'Models\\Usuario' . "\0" . 'senha', '' . "\0" . 'Models\\Usuario' . "\0" . 'verificado', '' . "\0" . 'Models\\Usuario' . "\0" . 'cadkey', '' . "\0" . 'Models\\Usuario' . "\0" . 'cadiv');
     }
 
     /**
@@ -318,6 +318,50 @@ class Usuario extends \Models\Usuario implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVerificado', array());
 
         return parent::getVerificado();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCadkey($cadkey)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCadkey', array($cadkey));
+
+        return parent::setCadkey($cadkey);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCadkey()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCadkey', array());
+
+        return parent::getCadkey();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCadiv($cadiv)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCadiv', array($cadiv));
+
+        return parent::setCadiv($cadiv);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCadiv()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCadiv', array());
+
+        return parent::getCadiv();
     }
 
 }

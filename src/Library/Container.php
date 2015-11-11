@@ -2,6 +2,8 @@
 
 namespace Library;
 
+require_once __DIR__ . '/cypher3des.php';
+
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Configuration;
@@ -19,6 +21,11 @@ use Library\Sessao;
  * @author adenilton
  */
 class Container {
+    
+    const LMIN = 'abcdefghijklmnopqrstuvwxyz';
+    const LMAI = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const NUM = '1234567890';
+    const SIMB = '!@#$%*-';
     //put your code here
     
     protected static function getDataBaseParams() 
@@ -113,9 +120,48 @@ class Container {
         return new \Respect\Rest\Router();
     }
     
-    
+    /**
+     * 
+     * @return Sessao
+     */
     public static function getSession() 
     {
         return Sessao::instanciar();
+    }
+    
+    /**
+     * Gera uma cadeia aleatória com 24 caracteres
+     * @return string
+     */
+    public static function getRandomCryptoKey() {
+        $caracteres = self::LMIN . self::LMAI . self::NUM . self::SIMB;
+        
+        $len = strlen($caracteres);
+        $retorno = "";
+        
+        for ($i = 1; $i <= 24; $i++) {
+            $rand = mt_rand(1, $len);
+            $retorno .= $caracteres[$rand - 1];
+        }
+        
+        return $retorno;
+    }
+    
+    /**
+     * Gera uma cadeia aleatória com 8 caracteres
+     * @return string
+     */
+    public static function getRandomCryptoIv() {
+        $caracteres = self::LMIN . self::LMAI . self::NUM . self::SIMB;
+        
+        $len = strlen($caracteres);
+        $retorno = "";
+        
+        for ($i = 1; $i <= 8; $i++) {
+            $rand = mt_rand(1, $len);
+            $retorno .= $caracteres[$rand - 1];
+        }
+        
+        return $retorno;        
     }
 }

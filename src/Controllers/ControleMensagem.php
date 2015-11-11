@@ -54,8 +54,9 @@ class ControleMensagem {
                 ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         
         
-        $json = Container::getCrytoParams();
-        extract($json);
+        $s = Container::getSession();
+        $k = $s->get("key");
+        $iv = $s->get("iv");
         
         foreach ($messages as $msg) {
             $encrypted = mcrypt_encrypt(
@@ -68,7 +69,7 @@ class ControleMensagem {
             $item = [
                 "nick" => trim($msg["apelido"]),
                 "mensagem" => stringToHex($encrypted),
-                "hora" => $msg[0]["dataTs"]->format('h:i:s')
+                "hora" => $msg[0]["dataTs"]->format('d/m/y H:i:s')
             ];
             $resp[] = $item;
         }

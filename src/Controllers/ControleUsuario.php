@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Models\Usuario;
 use Models\Mensagem;
 use Library\Sessao;
+use Library\Container;
 use Controllers\ControleMensagem;
 
 
@@ -33,6 +34,8 @@ class ControleUsuario{
         $u->setSobrenome($sobrenome);
         $u->setApelido($apelido);
         $u->setSenha($senha);
+        $u->setCadkey($cadkey);
+        $u->setCadiv($cadiv);
         
         try {
             $this->em->persist($u);
@@ -52,9 +55,14 @@ class ControleUsuario{
         
         $user = $u[0];
         
+        $k = base64_decode($user->getCadkey());
+        $iv = base64_decode($user->getCadiv());
+        
+        $pass = stringToHex(mcrypt_encrypt(MCRYPT_3DES, $k, $senha, MCRYPT_MODE_CBC, $iv));
+        
         if(!($user instanceof Usuario)){
             echo "Email não encontrado";
-        } elseif ($user->getSenha() !== $senha) {
+        } elseif ($user->getSenha() !== $pass) {
             echo "Senha incorreta.";
         } elseif ($user->getVerificado() === 0) {
             echo "Seu email ainda não foi validado.";
@@ -64,7 +72,7 @@ class ControleUsuario{
             $udata["nome"] = $user->getNome() . " " . $user->getSobrenome();
             $s->set("usuario", $udata);
             $mc = new ControleMensagem($this->em);
-            $msg = new \Models\Mensagem();
+            $msg = new Mensagem();
             $mc->enviar($msg, $user, "Entrou no chat");
             return true;
         }
